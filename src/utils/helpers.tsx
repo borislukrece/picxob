@@ -78,3 +78,16 @@ export function APP_URL() {
 export function APP_ENDPOINT() {
   return APP_URL() + "/api";
 }
+
+export const getImageMime = (base64String: string): string | null => {
+  const prefixMatch = base64String.match(/^data:(image\/[a-zA-Z]+);base64,/);
+  if (prefixMatch) return prefixMatch[1];
+
+  const firstBytes = base64String.substring(0, 8);
+  if (firstBytes.startsWith("iVBORw0K")) return "image/png";
+  if (firstBytes.startsWith("/9j/")) return "image/jpeg";
+  if (firstBytes.startsWith("R0lGOD")) return "image/gif";
+  if (firstBytes.startsWith("UklGR")) return "image/webp";
+
+  return null;
+}

@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
 import { TokenPayload } from "google-auth-library";
-import { generateUUID } from "@/utils/helpers";
-import { Buffer } from "buffer";
+import { generateUUID, getImageMime } from "@/utils/helpers";
 import { getUser } from "@/libs/google-client";
 import cloudinary from "@/libs/cloudinary-client";
 import prisma from "@/libs/prisma";
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,14 +44,18 @@ export async function POST(request: NextRequest) {
     }
 
     const IAResponse = await fetch(
-      "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
+      "https://router.huggingface.co/nebius/v1/images/generations",
       {
         headers: {
           Authorization: `Bearer ${process.env.HUGGING_FACE_TOKEN}`,
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ inputs: prompt }),
+        body: JSON.stringify({
+          prompt: prompt,
+          model: "black-forest-labs/flux-dev",
+          response_format: "b64_json"
+        }),
       }
     );
 
@@ -62,25 +66,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const BlobResponse = await IAResponse.blob();
+    const result = await IAResponse.json();
 
-    const base64data: string = await new Promise((resolve, reject) => {
-      const reader = new Response(BlobResponse).arrayBuffer();
+    const b64json = await result.data[0].b64_json;
+    const mimeType = getImageMime(b64json) || "image/png";
+    const extension = mimeType.split("/")[1];
 
-      reader
-        .then((buffer) => {
-          const base64data = Buffer.from(buffer).toString("base64");
-          resolve(base64data);
-        })
-        .catch(() => {
-          reject(new Error("Error reading the file."));
-        });
-    });
+    const base64data: string = b64json;
 
     const uploadToCloudinary = await cloudinary.uploader.upload(
-      `data:image/jpeg;base64,${base64data}`,
+      `data:${mimeType};base64,${base64data}`,
       {
-        resource_type: "auto",
+        resource_type: "image",
+        format: extension,
         upload_preset: "ml_default",
       }
     );
@@ -115,6 +113,7 @@ export async function POST(request: NextRequest) {
     return Response.json({ image: createdImage }, { status: 201 });
   } catch (error) {
     const err = error as Error;
+    console.log(err);
     return Response.json(
       { message: `Failed to send message`, error: err.message },
       {
