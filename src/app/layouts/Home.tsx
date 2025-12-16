@@ -73,9 +73,8 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                   <button
                     type="submit"
                     title="Send"
-                    className={`text-4xl ${
-                      loadingMessage ? null : "text-[var(--foreground-nosys)]"
-                    }`}>
+                    className={`text-4xl ${loadingMessage ? null : "text-[var(--foreground-nosys)]"
+                      }`}>
                     {!loadingMessage ? (
                       <i className="fa-solid fa-circle-arrow-up"></i>
                     ) : (
@@ -87,6 +86,10 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
             </form>
+
+            <div className="text-sm text-center py-2">
+              ⚠️ The generator does not remember previous requests. Please rephrase your prompt each time.
+            </div>
           </div>
         </div>
       </div>
