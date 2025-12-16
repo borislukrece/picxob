@@ -48,58 +48,52 @@ export default function Gallery({ gallery }: { gallery: GalleryInterface[] }) {
       <div className="w-full">
         <h1 className="font-bold mb-2 px-2 select-none hidden">Gallery</h1>
       </div>
-      {loadingGallery && (
-        <div className="flex items-center justify-center w-full h-full">
-          <span className="loader2"></span>
-        </div>
-      )}
-      {!loadingGallery && (
-        <>
-          {Object.keys(groupedImages).length > 0 ? (
-            Object.keys(groupedImages).map((date, index) => (
-              <div key={index} className="pb-2">
-                <div className="font-semibold text-xs text-center mb-2 px-2 text-slate-500 sticky top-0 z-10">
-                  <h2 className="bg-[var(--background)] py-2 rounded-b-md shadow-md shadow-black/[0.5] dark:shadow-black/[0.4]">
-                    {date}
-                  </h2>
-                </div>
-                <div
-                  className={`grid ${grid ? "grid-cols-1" : "grid-cols-3"
-                    } gap-4 px-2`}>
-                  {groupedImages[date].map((image) => (
-                    <button
-                      title="Thumbnail"
-                      type="button"
-                      key={image.token}
-                      onClick={() => handleImageClick(image)}>
-                      <div className="w-full h-full bg-[var(--hover)] overflow-hidden rounded-md shadow-lg shadow-black/[0.3] cursor-pointer">
-                        <div className="w-full h-full hover:scale-110 transition-all duration-150">
-                          <ImageComponent
-                            image={image}
-                            src={image.uri}
-                            alt={image.uri}
-                            width="500"
-                            height="500"
-                            quality={50}
-                            crop={{
-                              type: "thumb",
-                              source: true,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+      <>
+        {Object.keys(groupedImages).length > 0 ? (
+          Object.keys(groupedImages).map((date, index) => (
+            <div key={index} className="pb-2">
+              <div className="font-semibold text-xs text-center mb-2 px-2 text-slate-500 sticky top-0 z-10">
+                <h2 className="bg-[var(--background)] py-2 rounded-b-md shadow-md shadow-black/[0.5] dark:shadow-black/[0.4]">
+                  {date}
+                </h2>
               </div>
-            ))
-          ) : (
-            <div className="w-full text-sm text-gray-500 text-center py-2">
-              No images found
+              <div
+                className={`grid ${grid ? "grid-cols-1" : "grid-cols-3"
+                  } gap-4 px-2`}>
+                {groupedImages[date].map((image) => (
+                  <button
+                    title="Thumbnail"
+                    type="button"
+                    key={image.token}
+                    onClick={() => handleImageClick(image)}>
+                    <div className="w-full h-full bg-[var(--hover)] overflow-hidden rounded-md shadow-lg shadow-black/[0.3] cursor-pointer">
+                      <div className="w-full h-full hover:scale-110 transition-all duration-150">
+                        <ImageComponent
+                          image={image}
+                          src={image.uri}
+                          alt={image.uri}
+                          width="500"
+                          height="500"
+                          quality={50}
+                          crop={{
+                            type: "thumb",
+                            source: true,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
-        </>
-      )}
+          ))
+        ) : (
+          !loadingGallery && <div className="w-full text-sm text-gray-500 text-center py-2">
+            No images found
+          </div>
+        )}
+      </>
+
       {loadingGallery && (
         <div className="flex items-center justify-center w-full h-full">
           <span className="loader2"></span>
