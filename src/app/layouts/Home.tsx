@@ -6,10 +6,25 @@ import HeaderComponent from "@/components/HeaderComponent";
 import ResizableTextArea from "@/components/ResizableTextArea";
 import { useMessage } from "../context/MessageContext";
 
+const CONSENT_KEY = "picxob_user_consent";
+
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   const { newMessage, loadingMessage, messages } = useMessage();
 
   const [message, setMessage] = useState("");
+  const [showConsent, setShowConsent] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if (!consent) {
+      setShowConsent(true);
+    }
+  }, []);
+
+  const handleConsentClose = () => {
+    localStorage.setItem(CONSENT_KEY, "accepted");
+    setShowConsent(false);
+  };
 
   const handleInput = (input: FormEvent<HTMLTextAreaElement>) => {
     setMessage(input.currentTarget.value);
@@ -21,6 +36,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     if (message && !loadingMessage) {
+      handleConsentClose();
       newMessage("user", message);
       setMessage("");
     }
@@ -53,7 +69,24 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         <div className="w-full">
-          <div className="max-w-3xl mx-auto py-4 px-4">
+
+          <div className="max-w-3xl mx-auto py-4 px-4 relative">
+            {showConsent && (
+              <div className="consent w-full bg-[var(--hover)] py-2 px-2 rounded-3xl overflow-hidden my-2">
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex-1 text-sm px-2 py-2">
+                    By using this generator, you agree to our Terms of Service, acknowledge our Privacy Policy, and consent to the use of cookies.
+                  </div>
+
+                  <div className="transition-all duration-150">
+                    <button onClick={handleConsentClose} title="Close" type="button" className="w-6 h-6 flex items-center justify-center bg-[var(--background)] text-[var(--foreground-nosys)] rounded-full active:scale-95">
+                      <i className="fa-solid fa-close"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <form
               onSubmit={handleSubmit}
               method="POST"
@@ -87,7 +120,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </form>
 
-            <div className="text-sm text-center py-2">
+            <div className="text-sm text-center px-2 py-2">
               ⚠️ The generator does not remember previous requests. Please rephrase your prompt each time.
             </div>
           </div>
