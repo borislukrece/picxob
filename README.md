@@ -1,8 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PicXOB
 
-## Getting Started
+**PicXOB** is an **AI-powered image generation platform** built with [Next.js](https://nextjs.org), designed to prioritize simplicity and a seamless user experience. Users can create unique, high-quality images efficiently and effortlessly.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- AI-powered image generation  
+- Simple and intuitive user interface  
+- High-quality and unique image outputs  
+- Fast performance with real-time feedback  
+- Responsive design for desktop and mobile  
+
+---
+
+## 💻 Getting Started
+
+First, install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+````
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +34,44 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the platform in action.
+Start editing `app/page.tsx` to modify the homepage — changes update automatically.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Tech Stack
 
-## Learn More
+* **Framework:** Next.js
+* **Frontend:** React, TypeScript
+* **Backend / AI:** Node.js, integrated AI APIs
+* **Styling:** CSS / Tailwind
+* **Deployment:** Vercel
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📚 Learn More
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* [Next.js Documentation](https://nextjs.org/docs) – learn about Next.js features and API
+* [Next.js GitHub](https://github.com/vercel/next.js) – feedback and contributions welcome
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The easiest way to deploy your Next.js app is using [Vercel](https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app).
+
+Check the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more options.
+
+---
+
+## 📫 Contact / Feedback
+
+* GitHub: [ahotyboris](https://github.com/ahotyboris)
+* Portfolio: [portfolio.borislukrece.com](https://portfolio.borislukrece.com)
+
+---
+
+**Generate amazing AI images quickly and effortlessly with PicXOB! 🎨🤖**
+
